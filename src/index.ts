@@ -1,0 +1,15 @@
+export {RoutingLink, createRoutingLink} from './RoutingLink';
+export {getCacheConfig, routeVar} from './utils/cache';
+export {Route} from './components/Route';
+export {Link} from './components/Link';
+export {Routes} from './components/Routes';
+export {Outlet} from './components/Outlet';
+export type {Route as RouteType, RouteConfig, RoutingLinkOptions, RouteObject, RouteMatch} from './types';
+export {useRoute} from "./hooks/useRoute";
+export {useNavigate} from "./hooks/useNavigate";
+export {useParams} from "./hooks/useParams";
+export {useScrollRestoration} from "./hooks/useScrollRestoration";
+export {useSearchParams} from "./hooks/useSearchParams";
+export {useMatches} from "./hooks/useMatches";
+export {useParentRoute} from "./hooks/useParentRoute";
+export {clearPrefetchCache, clearLoaderRegistry, prefetchRoute, registerLoader} from "./utils/prefetch";

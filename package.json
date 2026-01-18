@@ -1,0 +1,50 @@
+{
+  "name": "apollo-link-routing",
+  "version": "0.1.0",
+  "description": "Apollo Link for managing routing state through Apollo Cache",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "pnpm run typecheck && pnpm run lint && pnpm run test run && pnpm run build",
+    "publish": "npm publish"
+  },
+  "keywords": [
+    "apollo",
+    "apollo-link",
+    "routing",
+    "apollo-cache",
+    "react-router",
+    "graphql"
+  ],
+  "peerDependencies": {
+    "@apollo/client": "^3.8.0",
+    "react": "^18.0.0"
+  },
+  "devDependencies": {
+    "@apollo/client": "^3.8.0",
+    "@types/react": "^18.0.0",
+    "react": "^18.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^1.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cameronaziz/apollo-link-routing"
+  },
+  "license": "MIT"
+}
