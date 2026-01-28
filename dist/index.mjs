@@ -306,9 +306,10 @@ var OutletProvider = (props) => {
   const {
     matches,
     outlet,
-    contextData
+    contextData,
+    children
   } = props;
-  return /* @__PURE__ */ jsx3(OutletContext.Provider, { value: { matches, outlet, contextData }, children: outlet });
+  return /* @__PURE__ */ jsx3(OutletContext.Provider, { value: { matches, outlet, contextData }, children: children !== void 0 ? children : outlet });
 };
 var Outlet = (props) => {
   const { context } = props;
@@ -340,7 +341,7 @@ var Router = (props) => {
       OutletProvider,
       {
         matches: matches.slice(0, index + 1),
-        outlet: element || outlet,
+        outlet: element ? /* @__PURE__ */ jsx4(OutletProvider, { matches: matches.slice(0, index + 1), outlet, contextData: match.route, children: element }) : outlet,
         contextData: match.route
       }
     );

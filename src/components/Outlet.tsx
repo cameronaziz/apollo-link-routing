@@ -10,16 +10,21 @@ interface OutletContextValue {
 export const OutletContext = createContext<OutletContextValue | null>(null);
 
 
-export const OutletProvider: FC<OutletContextValue> = (props) => {
+interface OutletProviderWithChildrenProps extends OutletContextValue {
+  children?: ReactNode;
+}
+
+export const OutletProvider: FC<OutletProviderWithChildrenProps> = (props) => {
   const {
     matches,
     outlet,
-    contextData
+    contextData,
+    children
   } = props
 
   return (
     <OutletContext.Provider value={{matches, outlet, contextData}}>
-      {outlet}
+      {children !== undefined ? children : outlet}
     </OutletContext.Provider>
   );
 }

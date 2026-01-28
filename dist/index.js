@@ -350,9 +350,10 @@ var OutletProvider = (props) => {
   const {
     matches,
     outlet,
-    contextData
+    contextData,
+    children
   } = props;
-  return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(OutletContext.Provider, { value: { matches, outlet, contextData }, children: outlet });
+  return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(OutletContext.Provider, { value: { matches, outlet, contextData }, children: children !== void 0 ? children : outlet });
 };
 var Outlet = (props) => {
   const { context } = props;
@@ -384,7 +385,7 @@ var Router = (props) => {
       OutletProvider,
       {
         matches: matches.slice(0, index + 1),
-        outlet: element || outlet,
+        outlet: element ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(OutletProvider, { matches: matches.slice(0, index + 1), outlet, contextData: match.route, children: element }) : outlet,
         contextData: match.route
       }
     );
