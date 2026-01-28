@@ -167,7 +167,7 @@ function createRoutingLink(options) {
 }
 
 // src/hooks/useRoute.ts
-import { useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client/react";
 function useRoute() {
   return useReactiveVar(routeVar);
 }

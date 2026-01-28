@@ -1,4 +1,4 @@
-import { ApolloLink, Operation, NextLink, FetchResult, ReactiveVar, ApolloClient } from '@apollo/client';
+import { ApolloLink, ReactiveVar, ApolloClient } from '@apollo/client';
 import { Observable } from '@apollo/client/utilities';
 import { ReactNode, FC, ComponentType, AnchorHTMLAttributes } from 'react';
 
@@ -32,6 +32,10 @@ interface RouteMatch {
     pathname: string;
     params: Record<string, string>;
 }
+
+type Operation = ApolloLink.Operation;
+type NextLink = ApolloLink.ForwardFunction;
+type FetchResult = ApolloLink.Result;
 
 declare class RoutingLink extends ApolloLink {
     private options;

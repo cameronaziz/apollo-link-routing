@@ -211,9 +211,9 @@ function createRoutingLink(options) {
 }
 
 // src/hooks/useRoute.ts
-var import_client3 = require("@apollo/client");
+var import_react = require("@apollo/client/react");
 function useRoute() {
-  return (0, import_client3.useReactiveVar)(routeVar);
+  return (0, import_react.useReactiveVar)(routeVar);
 }
 
 // src/components/Route.tsx
@@ -233,9 +233,9 @@ var Route = (props) => {
 };
 
 // src/hooks/useNavigate.ts
-var import_react = require("react");
+var import_react2 = require("react");
 function useNavigate() {
-  const navigate = (0, import_react.useCallback)((pathname, options) => {
+  const navigate = (0, import_react2.useCallback)((pathname, options) => {
     const route = {
       pathname,
       params: options?.params || {},
@@ -255,12 +255,12 @@ function useNavigate() {
       }
     }
   }, []);
-  const back = (0, import_react.useCallback)(() => {
+  const back = (0, import_react2.useCallback)(() => {
     if (typeof window !== "undefined") {
       window.history.back();
     }
   }, []);
-  const forward = (0, import_react.useCallback)(() => {
+  const forward = (0, import_react2.useCallback)(() => {
     if (typeof window !== "undefined") {
       window.history.forward();
     }
@@ -299,7 +299,7 @@ var Link = (props) => {
 };
 
 // src/components/Routes.tsx
-var import_react3 = require("react");
+var import_react4 = require("react");
 
 // src/lib/nested-matcher.ts
 function matchRoutes(routes, pathname, parentPath = "") {
@@ -328,9 +328,9 @@ function joinPaths(...paths) {
 }
 
 // src/components/Outlet.tsx
-var import_react2 = require("react");
+var import_react3 = require("react");
 var import_jsx_runtime3 = require("react/jsx-runtime");
-var OutletContext = (0, import_react2.createContext)(null);
+var OutletContext = (0, import_react3.createContext)(null);
 var OutletProvider = (props) => {
   const {
     matches,
@@ -341,7 +341,7 @@ var OutletProvider = (props) => {
 };
 var Outlet = (props) => {
   const { context } = props;
-  const parentContext = (0, import_react2.useContext)(OutletContext);
+  const parentContext = (0, import_react3.useContext)(OutletContext);
   if (!parentContext) {
     throw new Error("Outlet must be used within a Routes component");
   }
@@ -357,7 +357,7 @@ var import_jsx_runtime4 = require("react/jsx-runtime");
 var Routes = (props) => {
   const { routes } = props;
   const route = useRoute();
-  const matches = (0, import_react3.useMemo)(() => {
+  const matches = (0, import_react4.useMemo)(() => {
     if (!routes) return null;
     return matchRoutes(routes, route.pathname);
   }, [routes, route.pathname]);
@@ -385,7 +385,7 @@ function useParams() {
 }
 
 // src/hooks/useScrollRestoration.ts
-var import_react4 = require("react");
+var import_react5 = require("react");
 
 // src/lib/ScrollManager.ts
 var ScrollRestorationManager = class {
@@ -410,7 +410,7 @@ var scrollManager = new ScrollRestorationManager();
 // src/hooks/useScrollRestoration.ts
 function useScrollRestoration() {
   const route = useRoute();
-  (0, import_react4.useEffect)(() => {
+  (0, import_react5.useEffect)(() => {
     const key = route.pathname;
     const savedPosition = scrollManager.getPosition(key);
     if (savedPosition !== void 0) {
@@ -436,16 +436,16 @@ function useSearchParams() {
 }
 
 // src/hooks/useMatches.ts
-var import_react5 = require("react");
+var import_react6 = require("react");
 function useMatches() {
-  const context = (0, import_react5.useContext)(OutletContext);
+  const context = (0, import_react6.useContext)(OutletContext);
   return context?.matches || [];
 }
 
 // src/hooks/useParentRoute.ts
-var import_react6 = require("react");
+var import_react7 = require("react");
 function useParentRoute() {
-  const context = (0, import_react6.useContext)(OutletContext);
+  const context = (0, import_react7.useContext)(OutletContext);
   if (!context) {
     return null;
   }

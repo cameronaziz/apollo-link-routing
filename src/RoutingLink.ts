@@ -1,5 +1,9 @@
-import { ApolloLink, Operation, NextLink, FetchResult } from '@apollo/client';
+import { ApolloLink } from '@apollo/client';
 import { Observable } from '@apollo/client/utilities';
+
+type Operation = ApolloLink.Operation;
+type NextLink = ApolloLink.ForwardFunction;
+type FetchResult = ApolloLink.Result;
 import { routeVar } from './utils/cache';
 import { matchPath, parseQueryString } from './lib/matcher';
 import type { RoutingLinkOptions, Route } from './types';
