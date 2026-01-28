@@ -191,23 +191,23 @@ var Route = (props) => {
 // src/hooks/useNavigator.ts
 import { useCallback } from "react";
 var useNavigator = () => {
-  const navigate = useCallback((pathname, options) => {
-    const route = {
+  const route = useCallback((pathname, options) => {
+    const route2 = {
       pathname,
       params: options?.params || {},
       query: options?.query || {},
       hash: options?.hash,
       state: options?.state
     };
-    routeVar(route);
+    routeVar(route2);
     if (typeof window !== "undefined") {
-      const query = new URLSearchParams(route.query).toString();
-      const hash = route.hash ? `#${route.hash}` : "";
+      const query = new URLSearchParams(route2.query).toString();
+      const hash = route2.hash ? `#${route2.hash}` : "";
       const url = `${pathname}${query ? `?${query}` : ""}${hash}`;
       if (options?.replace) {
-        window.history.replaceState(route.state, "", url);
+        window.history.replaceState(route2.state, "", url);
       } else {
-        window.history.pushState(route.state, "", url);
+        window.history.pushState(route2.state, "", url);
       }
     }
   }, []);
@@ -221,7 +221,7 @@ var useNavigator = () => {
       window.history.forward();
     }
   }, []);
-  return { navigate, back, forward };
+  return { route, back, forward };
 };
 
 // src/components/Link.tsx
@@ -236,11 +236,11 @@ var Link = (props) => {
     children,
     ...rest
   } = props;
-  const { navigate } = useNavigator();
+  const { route } = useNavigator();
   const handleClick = (e) => {
     if (e.metaKey || e.ctrlKey) return;
     e.preventDefault();
-    navigate(to, { replace, state });
+    route(to, { replace, state });
     onClick?.(e);
   };
   return /* @__PURE__ */ jsx2(

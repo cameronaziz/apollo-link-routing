@@ -19,14 +19,14 @@ export const Link: FC<LinkProps> = (props) => {
     children,
     ...rest
   } = props
-  const {navigate} = useNavigator();
+  const {route} = useNavigator();
 
   const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
     // Allow ctrl/cmd+click to open in new tab
     if (e.metaKey || e.ctrlKey) return;
 
     e.preventDefault();
-    navigate(to, {replace, state});
+    route(to, {replace, state});
     onClick?.(e);
   };
 
