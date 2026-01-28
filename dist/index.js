@@ -349,11 +349,11 @@ var OutletContext = (0, import_react3.createContext)(null);
 var OutletProvider = (props) => {
   const {
     matches,
-    outlet,
+    element,
     contextData,
     children
   } = props;
-  return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(OutletContext.Provider, { value: { matches, outlet, contextData }, children: children !== void 0 ? children : outlet });
+  return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(OutletContext.Provider, { value: { matches, element, contextData }, children });
 };
 var Outlet = (props) => {
   const { context } = props;
@@ -365,7 +365,7 @@ var Outlet = (props) => {
     ...parentContext,
     contextData: context ?? parentContext.contextData
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(OutletContext.Provider, { value: mergedContext, children: parentContext.outlet });
+  return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(OutletContext.Provider, { value: mergedContext, children: parentContext.element });
 };
 
 // src/components/Router.tsx
@@ -379,14 +379,15 @@ var Router = (props) => {
     }
     return matchRoutes(routes, route.pathname);
   }, [routes, route.pathname]);
-  const renderedMatches = (0, import_react4.useMemo)(() => matches?.reduceRight((outlet, match, index) => {
+  const renderedMatches = (0, import_react4.useMemo)(() => matches?.reduceRight((childElement, match, index) => {
     const element = match.route.element;
     return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
       OutletProvider,
       {
         matches: matches.slice(0, index + 1),
-        outlet: element ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(OutletProvider, { matches: matches.slice(0, index + 1), outlet, contextData: match.route, children: element }) : outlet,
-        contextData: match.route
+        element: childElement,
+        contextData: match.route,
+        children: element
       }
     );
   }, null), [matches]);

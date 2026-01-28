@@ -20,13 +20,13 @@ export const Router: FC<RouterProps> = (props) => {
     return matchRoutes(routes, route.pathname);
   }, [routes, route.pathname]);
 
-  const renderedMatches = useMemo(() => matches?.reduceRight<ReactNode>((childOutlet, match, index) => {
+  const renderedMatches = useMemo(() => matches?.reduceRight<ReactNode>((childElement, match, index) => {
     const element = match.route.element;
 
     return (
       <OutletProvider
         matches={matches.slice(0, index + 1)}
-        outlet={childOutlet}
+        element={childElement}
         contextData={match.route}
       >
         {element}

@@ -305,11 +305,11 @@ var OutletContext = createContext(null);
 var OutletProvider = (props) => {
   const {
     matches,
-    outlet,
+    element,
     contextData,
     children
   } = props;
-  return /* @__PURE__ */ jsx3(OutletContext.Provider, { value: { matches, outlet, contextData }, children: children !== void 0 ? children : outlet });
+  return /* @__PURE__ */ jsx3(OutletContext.Provider, { value: { matches, element, contextData }, children });
 };
 var Outlet = (props) => {
   const { context } = props;
@@ -321,7 +321,7 @@ var Outlet = (props) => {
     ...parentContext,
     contextData: context ?? parentContext.contextData
   };
-  return /* @__PURE__ */ jsx3(OutletContext.Provider, { value: mergedContext, children: parentContext.outlet });
+  return /* @__PURE__ */ jsx3(OutletContext.Provider, { value: mergedContext, children: parentContext.element });
 };
 
 // src/components/Router.tsx
@@ -335,14 +335,15 @@ var Router = (props) => {
     }
     return matchRoutes(routes, route.pathname);
   }, [routes, route.pathname]);
-  const renderedMatches = useMemo(() => matches?.reduceRight((outlet, match, index) => {
+  const renderedMatches = useMemo(() => matches?.reduceRight((childElement, match, index) => {
     const element = match.route.element;
     return /* @__PURE__ */ jsx4(
       OutletProvider,
       {
         matches: matches.slice(0, index + 1),
-        outlet: element ? /* @__PURE__ */ jsx4(OutletProvider, { matches: matches.slice(0, index + 1), outlet, contextData: match.route, children: element }) : outlet,
-        contextData: match.route
+        element: childElement,
+        contextData: match.route,
+        children: element
       }
     );
   }, null), [matches]);

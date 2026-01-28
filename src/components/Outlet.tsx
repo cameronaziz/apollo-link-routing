@@ -3,28 +3,30 @@ import {RouteMatch} from '../types';
 
 interface OutletContextValue {
   matches: RouteMatch[];
-  outlet: ReactNode;
+  element: ReactNode;
   contextData?: any;
 }
 
 export const OutletContext = createContext<OutletContextValue | null>(null);
 
-
-interface OutletProviderWithChildrenProps extends OutletContextValue {
+interface OutletProviderProps {
+  matches: RouteMatch[];
+  element: ReactNode;
+  contextData?: any;
   children?: ReactNode;
 }
 
-export const OutletProvider: FC<OutletProviderWithChildrenProps> = (props) => {
+export const OutletProvider: FC<OutletProviderProps> = (props) => {
   const {
     matches,
-    outlet,
+    element,
     contextData,
     children
   } = props
 
   return (
-    <OutletContext.Provider value={{matches, outlet, contextData}}>
-      {children !== undefined ? children : outlet}
+    <OutletContext.Provider value={{matches, element, contextData}}>
+      {children}
     </OutletContext.Provider>
   );
 }
@@ -49,7 +51,7 @@ export const Outlet: FC<OutletProps> = (props) => {
 
   return (
     <OutletContext.Provider value={mergedContext}>
-      {parentContext.outlet}
+      {parentContext.element}
     </OutletContext.Provider>
   );
 }
