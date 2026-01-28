@@ -97,7 +97,7 @@ type NavigateOptions = {
     replace?: boolean;
 };
 type UseNavigatorResponse = {
-    route(pathname: string, options: NavigateOptions): void;
+    routeTo(pathname: string, options?: NavigateOptions): void;
     back(): void;
     forward(): void;
 };

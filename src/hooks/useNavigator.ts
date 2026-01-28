@@ -19,7 +19,7 @@ export type UseNavigatorResponse = {
 export type UseNavigator = () => UseNavigatorResponse
 
 export const useNavigator: UseNavigator = () => {
-  const route = useCallback((
+  const routeTo = useCallback((
     pathname: string,
     options?: NavigateOptions
   ) => {
@@ -58,5 +58,5 @@ export const useNavigator: UseNavigator = () => {
     }
   }, []);
 
-  return {route, back, forward};
+  return {routeTo, back, forward};
 }
