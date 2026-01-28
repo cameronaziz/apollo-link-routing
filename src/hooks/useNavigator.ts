@@ -11,7 +11,7 @@ export type NavigateOptions = {
 }
 
 export type UseNavigatorResponse = {
-  route(pathname: string, options: NavigateOptions): void
+  routeTo(pathname: string, options?: NavigateOptions): void
   back(): void
   forward(): void
 }
