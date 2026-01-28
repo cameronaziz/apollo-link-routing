@@ -2,7 +2,7 @@ export {RoutingLink, createRoutingLink} from './RoutingLink';
 export {getCacheConfig, routeVar} from './utils/cache';
 export {Route} from './components/Route';
 export {Link} from './components/Link';
-export {Routes} from './components/Routes';
+export {Router} from './components/Router';
 export {Outlet} from './components/Outlet';
 export type {Route as RouteType, RouteConfig, RoutingLinkOptions, RouteObject, RouteMatch} from './types';
 export {useRoute} from "./hooks/useRoute";

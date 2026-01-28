@@ -76,11 +76,11 @@ interface LinkProps extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'
 }
 declare const Link: FC<LinkProps>;
 
-interface RoutesProps {
+interface RouterProps {
     children?: ReactNode;
     routes?: RouteObject[];
 }
-declare const Routes: FC<RoutesProps>;
+declare const Router: FC<RouterProps>;
 
 interface OutletProps {
     context?: any;
@@ -123,4 +123,4 @@ declare const prefetchRoute: (client: ApolloClient, path: string, params?: Recor
 declare const clearPrefetchCache: (path?: string) => void;
 declare const clearLoaderRegistry: () => void;
 
-export { Link, Outlet, Route, type RouteConfig, type RouteMatch, type RouteObject, type Route$1 as RouteType, Routes, RoutingLink, type RoutingLinkOptions, clearLoaderRegistry, clearPrefetchCache, createRoutingLink, getCacheConfig, prefetchRoute, registerLoader, routeVar, useMatches, useNavigate, useParams, useParentRoute, useRoute, useScrollRestoration, useSearchParams };
+export { Link, Outlet, Route, type RouteConfig, type RouteMatch, type RouteObject, type Route$1 as RouteType, Router, RoutingLink, type RoutingLinkOptions, clearLoaderRegistry, clearPrefetchCache, createRoutingLink, getCacheConfig, prefetchRoute, registerLoader, routeVar, useMatches, useNavigate, useParams, useParentRoute, useRoute, useScrollRestoration, useSearchParams };

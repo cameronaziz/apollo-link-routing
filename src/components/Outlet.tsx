@@ -33,7 +33,7 @@ export const Outlet: FC<OutletProps> = (props) => {
   const parentContext = useContext(OutletContext);
 
   if (!parentContext) {
-    throw new Error('Outlet must be used within a Routes component');
+    throw new Error('Outlet must be used within a Router component');
   }
 
   // Merge the passed context with parent context

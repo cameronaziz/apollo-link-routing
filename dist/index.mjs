@@ -254,7 +254,7 @@ var Link = (props) => {
   );
 };
 
-// src/components/Routes.tsx
+// src/components/Router.tsx
 import { useMemo } from "react";
 
 // src/lib/nested-matcher.ts
@@ -299,7 +299,7 @@ var Outlet = (props) => {
   const { context } = props;
   const parentContext = useContext(OutletContext);
   if (!parentContext) {
-    throw new Error("Outlet must be used within a Routes component");
+    throw new Error("Outlet must be used within a Router component");
   }
   const mergedContext = {
     ...parentContext,
@@ -308,19 +308,18 @@ var Outlet = (props) => {
   return /* @__PURE__ */ jsx3(OutletContext.Provider, { value: mergedContext, children: parentContext.outlet });
 };
 
-// src/components/Routes.tsx
+// src/components/Router.tsx
 import { Fragment as Fragment2, jsx as jsx4 } from "react/jsx-runtime";
-var Routes = (props) => {
+var Router = (props) => {
   const { routes } = props;
   const route = useRoute();
   const matches = useMemo(() => {
-    if (!routes) return null;
+    if (!routes) {
+      return null;
+    }
     return matchRoutes(routes, route.pathname);
   }, [routes, route.pathname]);
-  if (!matches || matches.length === 0) {
-    return null;
-  }
-  const renderedMatches = matches.reduceRight((outlet, match, index) => {
+  const renderedMatches = useMemo(() => matches?.reduceRight((outlet, match, index) => {
     const element = match.route.element;
     return /* @__PURE__ */ jsx4(
       OutletProvider,
@@ -330,7 +329,10 @@ var Routes = (props) => {
         contextData: match.route
       }
     );
-  }, null);
+  }, null), [matches]);
+  if (!matches || matches.length === 0) {
+    return null;
+  }
   return /* @__PURE__ */ jsx4(Fragment2, { children: renderedMatches });
 };
 
@@ -467,7 +469,7 @@ export {
   Link,
   Outlet,
   Route,
-  Routes,
+  Router,
   RoutingLink,
   clearLoaderRegistry,
   clearPrefetchCache,

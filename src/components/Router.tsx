@@ -4,25 +4,23 @@ import { matchRoutes } from '../lib/nested-matcher';
 import { OutletProvider } from './Outlet';
 import {useRoute} from "../hooks/useRoute";
 
-interface RoutesProps {
+interface RouterProps {
   children?: ReactNode;
   routes?: RouteObject[];
 }
 
-export const Routes: FC<RoutesProps> = (props) => {
+export const Router: FC<RouterProps> = (props) => {
   const { routes } = props
   const route = useRoute();
 
   const matches = useMemo(() => {
-    if (!routes) return null;
+    if (!routes) {
+      return null;
+    }
     return matchRoutes(routes, route.pathname);
   }, [routes, route.pathname]);
 
-  if (!matches || matches.length === 0) {
-    return null;
-  }
-
-  const renderedMatches = matches.reduceRight<ReactNode>((outlet, match, index) => {
+  const renderedMatches = useMemo(() => matches?.reduceRight<ReactNode>((outlet, match, index) => {
     const element = match.route.element;
 
     return (
@@ -32,7 +30,11 @@ export const Routes: FC<RoutesProps> = (props) => {
         contextData={match.route}
       />
     );
-  }, null);
+  }, null), [matches]);
+
+  if (!matches || matches.length === 0) {
+    return null;
+  }
 
   return <>{renderedMatches}</>;
 }

@@ -23,7 +23,7 @@ __export(index_exports, {
   Link: () => Link,
   Outlet: () => Outlet,
   Route: () => Route,
-  Routes: () => Routes,
+  Router: () => Router,
   RoutingLink: () => RoutingLink,
   clearLoaderRegistry: () => clearLoaderRegistry,
   clearPrefetchCache: () => clearPrefetchCache,
@@ -298,7 +298,7 @@ var Link = (props) => {
   );
 };
 
-// src/components/Routes.tsx
+// src/components/Router.tsx
 var import_react4 = require("react");
 
 // src/lib/nested-matcher.ts
@@ -343,7 +343,7 @@ var Outlet = (props) => {
   const { context } = props;
   const parentContext = (0, import_react3.useContext)(OutletContext);
   if (!parentContext) {
-    throw new Error("Outlet must be used within a Routes component");
+    throw new Error("Outlet must be used within a Router component");
   }
   const mergedContext = {
     ...parentContext,
@@ -352,19 +352,18 @@ var Outlet = (props) => {
   return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(OutletContext.Provider, { value: mergedContext, children: parentContext.outlet });
 };
 
-// src/components/Routes.tsx
+// src/components/Router.tsx
 var import_jsx_runtime4 = require("react/jsx-runtime");
-var Routes = (props) => {
+var Router = (props) => {
   const { routes } = props;
   const route = useRoute();
   const matches = (0, import_react4.useMemo)(() => {
-    if (!routes) return null;
+    if (!routes) {
+      return null;
+    }
     return matchRoutes(routes, route.pathname);
   }, [routes, route.pathname]);
-  if (!matches || matches.length === 0) {
-    return null;
-  }
-  const renderedMatches = matches.reduceRight((outlet, match, index) => {
+  const renderedMatches = (0, import_react4.useMemo)(() => matches?.reduceRight((outlet, match, index) => {
     const element = match.route.element;
     return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
       OutletProvider,
@@ -374,7 +373,10 @@ var Routes = (props) => {
         contextData: match.route
       }
     );
-  }, null);
+  }, null), [matches]);
+  if (!matches || matches.length === 0) {
+    return null;
+  }
   return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_jsx_runtime4.Fragment, { children: renderedMatches });
 };
 
@@ -512,7 +514,7 @@ var clearLoaderRegistry = () => {
   Link,
   Outlet,
   Route,
-  Routes,
+  Router,
   RoutingLink,
   clearLoaderRegistry,
   clearPrefetchCache,

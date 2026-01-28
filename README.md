@@ -4,14 +4,14 @@
 
 A lightweight routing library that manages your app's routing state through Apollo Client's reactive cache. No external router needed—just hooks, components, and Apollo magic.
 
-## Installation
+## 🥂 Pregame
 
 ```bash
 pnpm add apollo-link-routing
 # or npm/yarn, we don't judge
 ```
 
-## Quick Start
+## 🕹️ The Setup
 
 ```tsx
 import { ApolloClient, InMemoryCache } from '@apollo/client';
@@ -26,9 +26,7 @@ const client = new ApolloClient({
 });
 ```
 
-## Features
-
-### 🎯 Path Matching (the fancy kind)
+### 🌹 Matches
 
 - **Dynamic params**: `/users/:id` → `{ id: "123" }`
 - **Optional params**: `/posts/:slug?` → matches `/posts` AND `/posts/hello`
@@ -59,21 +57,57 @@ function UserProfile() {
 
 ### 🧩 Components
 
+#### `<Route>` - Finding Your Match
+
+Matches the current pathname against a path pattern and renders if there's chemistry. It's like swiping through URLs—if your path pattern likes the pathname, it's a match! 💕
+
+**Props:**
+- `path: string` - Path pattern to match (e.g., `/users/:id`, `/posts/:slug?`)
+- `component?: ComponentType<any>` - React component to render if matched. Receives `params` prop
+- `children?: ReactNode | ((params: Record<string, string>) => ReactNode)` - Static or function children. Function receives extracted URL params
+- `exact?: boolean` - If true, requires exact pathname match. Default: false (pattern matching)
+
+**Examples:**
+
 ```tsx
-import { Routes, Route, Link, Outlet } from 'apollo-link-routing';
+import { Route } from 'apollo-link-routing';
+
+// Swipe right on a profile
+<Route path="/users/:id" component={UserProfile} />
+
+// It's a match! Extract their info
+<Route path="/posts/:slug">
+  {({ slug }) => <Post slug={slug} />}
+</Route>
+
+// Show your "About Me"
+<Route path="/about">
+  <About />
+</Route>
+
+// Only match the home page (no partial matches here)
+<Route path="/" exact component={Home} />
+```
+
+#### `<Router>` - Your Dating Profile
+
+Your app's matchmaking system. Hand it a list of routes and let it find "the one" based on the current URL.
+
+```tsx
+import { Router, Route, Link, Outlet } from 'apollo-link-routing';
 
 function App() {
   return (
-    <Routes routes={[
+    <Router routes={[
       {
         path: '/',
-        element: <Home />,
+        element: <Home />, // Your main squeeze
       },
       {
         path: '/users/:id',
         element: <User />,
         loader: async (params) => {
-          // Prefetch data before rendering
+          // Pre-load their profile before you swipe (no catfishing here)
           return fetchUser(params.id);
         },
       },
@@ -92,9 +126,48 @@ function Layout() {
   return (
     <div>
       <nav>
-        <Link to="/about/team">Team</Link>
+        <Link to="/about/team">Meet the Team</Link> {/* Swipe right to learn more */}
       </nav>
-      <Outlet /> {/* Renders nested routes */}
+      <Outlet /> {/* This is where the magic happens 💕 */}
+    </div>
+  );
+}
+```
+
+#### Why No Switch Component?
+
+Unlike some routers, we don't provide a `Switch` component for stacking route declarations. Here's why:
+
+**Better approach: Use `Router` for your main structure**
+
+```tsx
+// ✅ Recommended: Router + route config objects
+<Router routes={[
+  { path: '/', element: <Home /> },
+  { path: '/users/:id', element: <User /> },
+  { path: '/about', element: <About /> },
+]} />
+```
+
+**Why this beats a Switch pattern:**
+1. **Single pass matching** - One efficient path analysis instead of checking each Route sequentially
+2. **Loader support** - Data prefetching works across your entire route tree
+3. **Nested routes** - Built-in support for layouts and `<Outlet />`
+4. **Better DX** - Route configuration is declarative and colocated
+5. **First-match wins** - Route priority is explicit, not implicit
+
+**When to use standalone `Route` components:**
+For conditional rendering *within* routes, not for your main routing structure.
+
+```tsx
+// ✅ OK: Conditional rendering inside a route
+function Dashboard() {
+  const user = useUser();
+
+  return (
+    <div>
+      <Route path="/admin" exact component={AdminPanel} />
+      {user && <Route path="/profile">{/* Profile UI */}</Route>}
     </div>
   );
 }
