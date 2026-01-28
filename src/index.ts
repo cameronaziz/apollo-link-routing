@@ -6,7 +6,8 @@ export {Router} from './components/Router';
 export {Outlet} from './components/Outlet';
 export type {Route as RouteType, RouteConfig, RoutingLinkOptions, RouteObject, RouteMatch} from './types';
 export {useRoute} from "./hooks/useRoute";
-export {useNavigate} from "./hooks/useNavigate";
+export {useNavigator} from "./hooks/useNavigator";
+export type { NavigateOptions, UseNavigator, UseNavigatorResponse } from './hooks/useNavigator'
 export {useParams} from "./hooks/useParams";
 export {useScrollRestoration} from "./hooks/useScrollRestoration";
 export {useSearchParams} from "./hooks/useSearchParams";

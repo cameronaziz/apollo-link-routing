@@ -89,17 +89,20 @@ declare const Outlet: FC<OutletProps>;
 
 declare function useRoute(): Route$1;
 
-declare function useNavigate(): {
-    navigate: (pathname: string, options?: {
-        params?: Record<string, string>;
-        query?: Record<string, string>;
-        hash?: string;
-        state?: any;
-        replace?: boolean;
-    }) => void;
-    back: () => void;
-    forward: () => void;
+type NavigateOptions = {
+    params?: Record<string, string>;
+    query?: Record<string, string>;
+    hash?: string;
+    state?: any;
+    replace?: boolean;
 };
+type UseNavigatorResponse = {
+    navigate(pathname: string, options: NavigateOptions): void;
+    back(): void;
+    forward(): void;
+};
+type UseNavigator = () => UseNavigatorResponse;
+declare const useNavigator: UseNavigator;
 
 declare function useParams(): Record<string, string>;
 
@@ -123,4 +126,4 @@ declare const prefetchRoute: (client: ApolloClient, path: string, params?: Recor
 declare const clearPrefetchCache: (path?: string) => void;
 declare const clearLoaderRegistry: () => void;
 
-export { Link, Outlet, Route, type RouteConfig, type RouteMatch, type RouteObject, type Route$1 as RouteType, Router, RoutingLink, type RoutingLinkOptions, clearLoaderRegistry, clearPrefetchCache, createRoutingLink, getCacheConfig, prefetchRoute, registerLoader, routeVar, useMatches, useNavigate, useParams, useParentRoute, useRoute, useScrollRestoration, useSearchParams };
+export { Link, type NavigateOptions, Outlet, Route, type RouteConfig, type RouteMatch, type RouteObject, type Route$1 as RouteType, Router, RoutingLink, type RoutingLinkOptions, type UseNavigator, type UseNavigatorResponse, clearLoaderRegistry, clearPrefetchCache, createRoutingLink, getCacheConfig, prefetchRoute, registerLoader, routeVar, useMatches, useNavigator, useParams, useParentRoute, useRoute, useScrollRestoration, useSearchParams };

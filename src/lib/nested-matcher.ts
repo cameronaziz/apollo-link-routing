@@ -27,9 +27,27 @@ export function matchRoutes(
 
       return [routeMatch];
     }
+
+    // For routes with children, try partial match (pathname starts with parent path)
+    if (route.children && isPathPrefix(fullPath, pathname)) {
+      const childMatches = matchRoutes(route.children, pathname, fullPath);
+      if (childMatches) {
+        const routeMatch: RouteMatch = {
+          route,
+          pathname: fullPath,
+          params: {},
+        };
+        return [routeMatch, ...childMatches];
+      }
+    }
   }
 
   return null;
+}
+
+function isPathPrefix(prefix: string, pathname: string): boolean {
+  if (prefix === '/') return true;
+  return pathname === prefix || pathname.startsWith(prefix + '/');
 }
 
 export function joinPaths(...paths: string[]): string {

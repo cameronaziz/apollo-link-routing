@@ -2,16 +2,26 @@ import {useCallback} from "react";
 import {Route} from "../types";
 import {routeVar} from "../utils/cache";
 
-export function useNavigate() {
+export type NavigateOptions = {
+  params?: Record<string, string>;
+  query?: Record<string, string>;
+  hash?: string;
+  state?: any;
+  replace?: boolean;
+}
+
+export type UseNavigatorResponse = {
+  navigate(pathname: string, options: NavigateOptions): void
+  back(): void
+  forward(): void
+}
+
+export type UseNavigator = () => UseNavigatorResponse
+
+export const useNavigator: UseNavigator = () => {
   const navigate = useCallback((
     pathname: string,
-    options?: {
-      params?: Record<string, string>;
-      query?: Record<string, string>;
-      hash?: string;
-      state?: any;
-      replace?: boolean;
-    }
+    options?: NavigateOptions
   ) => {
     const route: Route = {
       pathname,

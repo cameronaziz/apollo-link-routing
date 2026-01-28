@@ -1,17 +1,17 @@
 # apollo-link-routing
 
-> Because who says routing can't live in your Apollo Cache? 🚀
+> It's not you, it's your route—now with Apollo matching algorithms. 💕🚀
 
-A lightweight routing library that manages your app's routing state through Apollo Client's reactive cache. No external router needed—just hooks, components, and Apollo magic.
+A lightweight routing library that manages your app's routing state through Apollo Client's reactive cache. Match your users to the perfect URL—no external router needed, just hooks, components, and a little Apollo magic.
 
-## 🥂 Pregame
+## 💝 Getting Started
 
 ```bash
 pnpm add apollo-link-routing
-# or npm/yarn, we don't judge
+# or npm/yarn, no judgment on your package manager choice
 ```
 
-## 🕹️ The Setup
+## 💔 Setting Up Your Profile
 
 ```tsx
 import { ApolloClient, InMemoryCache } from '@apollo/client';
@@ -39,13 +39,13 @@ Our matchmaking finds your perfect routing soulmate:
 
 ```tsx
 import {
-  useRoute,        // Get current route
-  useNavigate,     // Navigate programmatically
-  useParams,       // Extract URL params
-  useSearchParams, // Query string shenanigans
-  useMatches,      // All matched routes (nested)
-  useParentRoute,  // For nested route nerds
-  useScrollRestoration, // Auto scroll restoration
+  useRoute,        // See who you're matched with (current profile)
+  useNavigate,     // Swipe to a new profile
+  useParams,       // Extract their details from the URL
+  useSearchParams, // Filter preferences & query fun
+  useMatches,      // See all your connections (nested)
+  useParentRoute,  // Talk to your match's parent 😉
+  useScrollRestoration, // Don't forget where you were
 } from 'apollo-link-routing';
 
 function UserProfile() {

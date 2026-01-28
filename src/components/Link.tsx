@@ -1,6 +1,6 @@
 import {AnchorHTMLAttributes, FC, MouseEvent} from 'react';
 
-import {useNavigate} from "../hooks/useNavigate";
+import {useNavigator} from "../hooks/useNavigator";
 
 export interface LinkProps extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> {
   to: string;
@@ -19,7 +19,7 @@ export const Link: FC<LinkProps> = (props) => {
     children,
     ...rest
   } = props
-  const {navigate} = useNavigate();
+  const {navigate} = useNavigator();
 
   const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
     // Allow ctrl/cmd+click to open in new tab

@@ -188,9 +188,9 @@ var Route = (props) => {
   return /* @__PURE__ */ jsx(Fragment, { children });
 };
 
-// src/hooks/useNavigate.ts
+// src/hooks/useNavigator.ts
 import { useCallback } from "react";
-function useNavigate() {
+var useNavigator = () => {
   const navigate = useCallback((pathname, options) => {
     const route = {
       pathname,
@@ -222,7 +222,7 @@ function useNavigate() {
     }
   }, []);
   return { navigate, back, forward };
-}
+};
 
 // src/components/Link.tsx
 import { jsx as jsx2 } from "react/jsx-runtime";
@@ -236,7 +236,7 @@ var Link = (props) => {
     children,
     ...rest
   } = props;
-  const { navigate } = useNavigate();
+  const { navigate } = useNavigator();
   const handleClick = (e) => {
     if (e.metaKey || e.ctrlKey) return;
     e.preventDefault();
@@ -276,8 +276,23 @@ function matchRoutes(routes, pathname, parentPath = "") {
       }
       return [routeMatch];
     }
+    if (route.children && isPathPrefix(fullPath, pathname)) {
+      const childMatches = matchRoutes(route.children, pathname, fullPath);
+      if (childMatches) {
+        const routeMatch = {
+          route,
+          pathname: fullPath,
+          params: {}
+        };
+        return [routeMatch, ...childMatches];
+      }
+    }
   }
   return null;
+}
+function isPathPrefix(prefix, pathname) {
+  if (prefix === "/") return true;
+  return pathname === prefix || pathname.startsWith(prefix + "/");
 }
 function joinPaths(...paths) {
   return paths.join("/").replace(/\/+/g, "/").replace(/\/$/, "") || "/";
@@ -479,7 +494,7 @@ export {
   registerLoader,
   routeVar,
   useMatches,
-  useNavigate,
+  useNavigator,
   useParams,
   useParentRoute,
   useRoute,

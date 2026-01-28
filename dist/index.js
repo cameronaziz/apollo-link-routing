@@ -33,7 +33,7 @@ __export(index_exports, {
   registerLoader: () => registerLoader,
   routeVar: () => routeVar,
   useMatches: () => useMatches,
-  useNavigate: () => useNavigate,
+  useNavigator: () => useNavigator,
   useParams: () => useParams,
   useParentRoute: () => useParentRoute,
   useRoute: () => useRoute,
@@ -232,9 +232,9 @@ var Route = (props) => {
   return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, { children });
 };
 
-// src/hooks/useNavigate.ts
+// src/hooks/useNavigator.ts
 var import_react2 = require("react");
-function useNavigate() {
+var useNavigator = () => {
   const navigate = (0, import_react2.useCallback)((pathname, options) => {
     const route = {
       pathname,
@@ -266,7 +266,7 @@ function useNavigate() {
     }
   }, []);
   return { navigate, back, forward };
-}
+};
 
 // src/components/Link.tsx
 var import_jsx_runtime2 = require("react/jsx-runtime");
@@ -280,7 +280,7 @@ var Link = (props) => {
     children,
     ...rest
   } = props;
-  const { navigate } = useNavigate();
+  const { navigate } = useNavigator();
   const handleClick = (e) => {
     if (e.metaKey || e.ctrlKey) return;
     e.preventDefault();
@@ -320,8 +320,23 @@ function matchRoutes(routes, pathname, parentPath = "") {
       }
       return [routeMatch];
     }
+    if (route.children && isPathPrefix(fullPath, pathname)) {
+      const childMatches = matchRoutes(route.children, pathname, fullPath);
+      if (childMatches) {
+        const routeMatch = {
+          route,
+          pathname: fullPath,
+          params: {}
+        };
+        return [routeMatch, ...childMatches];
+      }
+    }
   }
   return null;
+}
+function isPathPrefix(prefix, pathname) {
+  if (prefix === "/") return true;
+  return pathname === prefix || pathname.startsWith(prefix + "/");
 }
 function joinPaths(...paths) {
   return paths.join("/").replace(/\/+/g, "/").replace(/\/$/, "") || "/";
@@ -524,7 +539,7 @@ var clearLoaderRegistry = () => {
   registerLoader,
   routeVar,
   useMatches,
-  useNavigate,
+  useNavigator,
   useParams,
   useParentRoute,
   useRoute,
