@@ -20,7 +20,7 @@
     "lint:fix": "eslint src --fix",
     "typecheck": "tsc --noEmit"
   },
-  "files": ["dist"]
+  "files": ["dist"],
   "keywords": [
     "apollo",
     "apollo-link",
