@@ -18,10 +18,9 @@
     "test:watch": "vitest --watch",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
-    "typecheck": "tsc --noEmit",
-    "prepublishOnly": "pnpm run typecheck && pnpm run lint && pnpm run test run && pnpm run build",
-    "publish": "npm publish"
+    "typecheck": "tsc --noEmit"
   },
+  "files": ["dist"]
   "keywords": [
     "apollo",
     "apollo-link",
